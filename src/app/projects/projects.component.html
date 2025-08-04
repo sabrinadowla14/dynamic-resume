@@ -1,0 +1,30 @@
+<div class="d-flex justify-content-center my-3">
+  <select
+    class="form-select w-auto"
+    [ngModel]="selectedProjectId()"
+    (ngModelChange)="selectedProjectId.set($event)"
+  >
+    <option [ngValue]="null" disabled>-- Select a Project --</option>
+    <option *ngFor="let project of projects()" [ngValue]="project.id">
+      {{ project.title }}
+    </option>
+  </select>
+</div>
+
+<div *ngIf="selectedProject() as project" class="card">
+  <div class="card-body">
+    <h5 class="card-title">{{ project.title }}</h5>
+    <p class="card-text">{{ project.description }}</p>
+    <p><strong>Tech Stack:</strong> {{ project.tech_stack }}</p>
+    <a [href]="project.github_link" target="_blank" class="btn btn-outline-dark"
+      >GitHub</a
+    >
+    <a
+      *ngIf="project.live_link"
+      [href]="project.live_link"
+      target="_blank"
+      class="btn btn-outline-success ms-2"
+      >Live Demo</a
+    >
+  </div>
+</div>

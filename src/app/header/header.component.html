@@ -1,0 +1,51 @@
+<div *ngIf="showAlert" class="alert alert-success text-center mb-3">
+  Welcome to Dynamic Resume!
+</div>
+
+<div class="container-fluid bg-light py-3">
+  <div class="row align-items-center text-center text-md-start">
+    <!-- Left: Address -->
+    <div class="col-md-4">
+      <button
+        *ngIf="router.url.includes('/projects')"
+        class="btn btn-secondary me-2"
+        (click)="goBack()"
+      >
+        ← Back
+      </button>
+      <button class="btn btn-dark" [routerLink]="['/projects']">
+        Git Projects
+      </button>
+    </div>
+
+    <!-- Center: Name -->
+    <div class="col-md-4 d-flex flex-column align-items-center">
+      <h2 class="mb-0">{{ profile?.name }}</h2>
+      <p class="mb-0">{{ profile?.address }}</p>
+    </div>
+
+    <!-- Right: Social Links -->
+    <div
+      class="col-md-4 d-flex justify-content-md-end justify-content-center mt-2 mt-md-0 gap-2"
+    >
+      <a
+        [href]="profile?.github_link"
+        target="_blank"
+        class="btn btn-outline-dark btn-sm"
+        >GitHub</a
+      >
+      <a
+        [href]="profile?.linkedin_link"
+        target="_blank"
+        class="btn btn-outline-primary btn-sm"
+        >LinkedIn</a
+      >
+      <a
+        [href]="profile?.portfolio_link"
+        target="_blank"
+        class="btn btn-outline-success btn-sm"
+        >Portfolio</a
+      >
+    </div>
+  </div>
+</div>
