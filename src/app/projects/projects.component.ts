@@ -22,17 +22,15 @@ export class ProjectsComponent {
   );
 
   constructor() {
-    effect(() => {
-      this.apiService.getProjects().subscribe({
-        next: (res) => {
-          console.log('Raw response', res);
-          const result = Array.isArray(res) ? res : [res];
-          this.projects.set(result);
-          console.log('Projects:', this.projects());
-          console.log('Selected Project ID:', this.selectedProjectId());
-        },
-        error: (err) => console.error('Error fetching projects', err),
-      });
+    this.apiService.getProjects().subscribe({
+      next: (res) => {
+        console.log('Raw response', res);
+        const result = Array.isArray(res) ? res : [res];
+        this.projects.set(result);
+        console.log('Projects:', this.projects());
+        console.log('Selected Project ID:', this.selectedProjectId());
+      },
+      error: (err) => console.error('Error fetching projects', err),
     });
   }
 

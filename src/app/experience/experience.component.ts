@@ -1,7 +1,9 @@
 import { Component, effect, inject, signal } from '@angular/core';
 import { ApiService } from '../services/api.service';
 import { Experience } from '../models/experience';
+
 import Modal from 'bootstrap/js/dist/modal';
+
 import { RouterLink } from '@angular/router';
 import { CommonModule } from '@angular/common';
 
@@ -20,20 +22,18 @@ export class ExperienceComponent {
   selectedExperience = signal<Experience | null>(null);
 
   constructor() {
-    effect(() => {
-      this.apiService.getExperience().subscribe({
-        next: (res) => {
-          const result = Array.isArray(res) ? res : [res];
-          this.experiences.set(result as Experience[]);
-          console.log('Experiences', result);
-          result.forEach((exp) => {
-            this.skills.push(exp.skills);
-          });
-          console.log('Skills', this.skills);
-          console.log('signal', this.experiences());
-        },
-        error: (err) => console.error('Error fetching experience', err),
-      });
+    this.apiService.getExperience().subscribe({
+      next: (res) => {
+        const result = Array.isArray(res) ? res : [res];
+        this.experiences.set(result as Experience[]);
+        console.log('Experiences', result);
+        result.forEach((exp) => {
+          this.skills.push(exp.skills);
+        });
+        console.log('Skills', this.skills);
+        console.log('signal', this.experiences());
+      },
+      error: (err) => console.error('Error fetching experience', err),
     });
   }
 

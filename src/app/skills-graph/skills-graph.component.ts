@@ -24,31 +24,29 @@ export class SkillsGraphComponent implements AfterViewInit {
   private injector = inject(Injector);
 
   constructor(private apiService: ApiService) {
-    effect(() => {
-      this.apiService.getExperience().subscribe({
-        next: (res) => {
-          const result = Array.isArray(res) ? res : [res];
+    this.apiService.getExperience().subscribe({
+      next: (res) => {
+        const result = Array.isArray(res) ? res : [res];
 
-          // Count skills
-          const skillMap = new Map<string, number>();
+        // Count skills
+        const skillMap = new Map<string, number>();
 
-          result.forEach((exp) => {
-            const skills = exp.skills.split(',').map((s) => s.trim()); // Split and trim
+        result.forEach((exp) => {
+          const skills = exp.skills.split(',').map((s) => s.trim()); // Split and trim
 
-            skills.forEach((skill) => {
-              skillMap.set(skill, (skillMap.get(skill) || 0) + 1);
-            });
+          skills.forEach((skill) => {
+            skillMap.set(skill, (skillMap.get(skill) || 0) + 1);
           });
+        });
 
-          // Convert to array
-          const chartData = Array.from(skillMap, ([skill, value]) => ({
-            skill,
-            value,
-          }));
-          this.skillsData.set(chartData);
-        },
-        error: (err) => console.error('Error fetching experience', err),
-      });
+        // Convert to array
+        const chartData = Array.from(skillMap, ([skill, value]) => ({
+          skill,
+          value,
+        }));
+        this.skillsData.set(chartData);
+      },
+      error: (err) => console.error('Error fetching experience', err),
     });
   }
   ngAfterViewInit(): void {
